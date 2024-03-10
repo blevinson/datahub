@@ -1,31 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" href="assets/icons/favicon.ico" />
-        <link rel="mask-icon" href="assets/icons/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <meta name="description" content="A Metadata Platform for the Modern Data Stack" />
-        <!--
-          manifest.json provides metadata used when your web app is installed on a
-          user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-        -->
-        <link rel="manifest" href="/manifest.json" />
-        <title>DataHub</title>
-    </head>
-    <body>
-        <noscript>You need to enable JavaScript to run this app.</noscript>
-        <div id="root" style="min-height: 100%; display: flex; flex-direction: column"></div>
-        <script type="module" src="/src/index.tsx"></script>
-        <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="assets/icons/favicon.ico" />
+    <link rel="mask-icon" href="assets/icons/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="A Metadata Platform for the Modern Data Stack" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>DataHub!</title>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <script src="https://app.smartprompt.io/pilot.js"></script>
+    <script>
+        const options = {
+            apiUrl: "https://app.smartprompt.io/backend",
+            initialMessage: "How are the things",
+            token: "l8TqGQJUMt5bqAw9",
+            defaultOpen: true,
+            triggerSelector: "#triggerSelector",
+            socketUrl: "https://app.smartprompt.io",
+            headers: {
+                Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY3RvclR5cGUiOiJVU0VSIiwiYWN0b3JJZCI6ImRhdGFodWIiLCJ0eXBlIjoiUEVSU09OQUwiLCJ2ZXJzaW9uIjoiMiIsImp0aSI6ImJmNTEzZjEyLWNjM2YtNGQyZS1iMjc5LTEyZjk0YjI4M2ExZSIsInN1YiI6ImRhdGFodWIiLCJpc3MiOiJkYXRhaHViLW1ldGFkYXRhLXNlcnZpY2UifQ.qvy93uyZruy55Lsj0j509u6Z6gIturUMfC7nF99kFT4",
+                AnyKey: "AnyValue"
+            },
+            user: {
+                name: "Default User"
+            },
+            containerProps: {
+                style: {
+                    width: "400px",
+                    height: "500px",
+                    position: "fixed",
+                    bottom: "0",
+                    right: "0",
+                    zIndex: "9999",
+                },
+                className: "copilot"
+            }
+        };
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    --></body>
+        function initAiCoPilotWithOptions() {
+            initAiCoPilot(options);
+
+            document.getElementById('minimizeBtn').addEventListener('click', minimizeCoPilot);
+            document.getElementById('restoreBtn').addEventListener('click', restoreCoPilot);
+        }
+
+        function minimizeCoPilot() {
+            const container = document.querySelector('.copilot'); // Corrected selector
+            container.style.width = '0';
+            container.style.height = '0';
+            document.getElementById('minimizeBtn').style.display = 'none';
+            document.getElementById('restoreBtn').style.display = 'block';
+        }
+
+        function restoreCoPilot() {
+            const container = document.querySelector('.copilot'); // Corrected selector
+            container.style.width = '400px'; // Match the original size
+            container.style.height = '500px'; // Match the original size
+            document.getElementById('minimizeBtn').style.display = 'block';
+            document.getElementById('restoreBtn').style.display = 'none';
+        }
+
+        window.addEventListener("DOMContentLoaded", ()=>initAiCoPilotWithOptions());
+    </script>
+</head>
+<body>
+<!-- Minimize and restore buttons -->
+<div id="copilotControls" style="position: fixed; bottom: 0; right: 0; z-index: 10000;">
+    <button id="minimizeBtn">Minimize</button>
+    <button id="restoreBtn" style="display:none;">Restore</button>
+</div>
+<noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="root" style="min-height: 100%; display: flex; flex-direction: column"></div>
+<script type="module" src="/src/index.tsx"></script>
+</body>
 </html>
