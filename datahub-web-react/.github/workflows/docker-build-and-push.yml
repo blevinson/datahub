@@ -1,47 +1,26 @@
 name: Docker Build and Push
-echo "##active_line2##"
 
-echo "##active_line3##"
 on:
-echo "##active_line4##"
   push:
-echo "##active_line5##"
     branches:
-echo "##active_line6##"
       - main
-echo "##active_line7##"
 
-echo "##active_line8##"
 jobs:
-echo "##active_line9##"
   build:
-echo "##active_line10##"
+    if: github.event_name == "push" && github.ref == "refs/heads/main"
+
     runs-on: ubuntu-latest
-echo "##active_line11##"
 
-echo "##active_line12##"
     steps:
-echo "##active_line13##"
       - name: Checkout code
-echo "##active_line14##"
         uses: actions/checkout@v2
-echo "##active_line15##"
 
-echo "##active_line16##"
       - name: Login to Docker Hub
-echo "##active_line17##"
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-echo "##active_line18##"
 
-echo "##active_line19##"
       - name: Build Docker image
-echo "##active_line20##"
         run: docker build -t my-image .
-echo "##active_line21##"
 
-echo "##active_line22##"
       - name: Push Docker image
-echo "##active_line23##"
         run: docker tag my-image ${{ secrets.DOCKERHUB_USERNAME }}/my-image
-echo "##active_line24##"
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-image
