@@ -1,5 +1,4 @@
 name: documentation
-
 on:
   pull_request:
     branches:
