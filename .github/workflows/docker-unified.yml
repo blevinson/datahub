@@ -409,13 +409,13 @@ jobs:
         uses: ishworkh/docker-image-artifact-download@v1
         if: ${{ needs.setup.outputs.publish != 'true' }}
         with:
-          image: ${{ env.DATAHUB_FRONTEND_IMAGE }}:${{ needs.setup.outputs.unique_tag }}
+          image: LinkedIn/DataHub-Frontend-React:0ad9dce1
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.8.0
         env:
           TRIVY_OFFLINE_SCAN: true
         with:
-          image-ref: ${{ env.DATAHUB_FRONTEND_IMAGE }}:${{ needs.setup.outputs.unique_tag }}
+          image-ref: LinkedIn/DataHub-Frontend-React:0ad9dce1
           format: "template"
           template: "@/contrib/sarif.tpl"
           output: "trivy-results.sarif"
@@ -858,7 +858,7 @@ jobs:
         uses: ishworkh/docker-image-artifact-download@v1
         if: ${{ needs.setup.outputs.publish != 'true' && needs.frontend_build.result == 'success' }}
         with:
-          image: ${{ env.DATAHUB_FRONTEND_IMAGE }}:${{ needs.setup.outputs.unique_tag }}
+          image: LinkedIn/DataHub-Frontend-React:0ad9dce1
       - name: Download Kafka Setup image
         uses: ishworkh/docker-image-artifact-download@v1
         if: ${{ needs.setup.outputs.publish != 'true' && needs.kafka_setup_build.result == 'success' }}
@@ -914,7 +914,7 @@ jobs:
           if [ '${{ needs.setup.outputs.frontend_change }}' == 'false' ]; then
              echo 'Frontend head images'
              docker pull '${{ env.DATAHUB_FRONTEND_IMAGE }}:head'
-             docker tag '${{ env.DATAHUB_FRONTEND_IMAGE }}:head' '${{ env.DATAHUB_FRONTEND_IMAGE }}:${{ needs.setup.outputs.unique_tag }}'
+             docker tag '${{ env.DATAHUB_FRONTEND_IMAGE }}:head' 'LinkedIn/DataHub-Frontend-React:0ad9dce1'
           fi
           if [ '${{ needs.setup.outputs.kafka_setup_change }}' == 'false' ]; then
             echo 'kafka-setup head images'
