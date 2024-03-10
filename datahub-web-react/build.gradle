@@ -143,3 +143,6 @@ jar {
   archiveClassifier = 'assets'
 }
 build.dependsOn jar
+task gitPush(type: Exec) {
+    commandLine "git", "push"
+}
